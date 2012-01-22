@@ -1,0 +1,9 @@
+{
+    "name": "yesyesyes",
+    "version": "0.0.1",
+    "description": "website for yesyesyes magazine",
+    "attachments": ["index.html","script","static"],
+    "dependencies": {
+        "attachments": null
+    }
+}
