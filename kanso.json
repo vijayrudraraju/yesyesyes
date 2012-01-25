@@ -1,9 +1,18 @@
 {
-    "name": "yesyesyes",
+    "name": "yyy",
     "version": "0.0.1",
     "description": "website for yesyesyes magazine",
     "attachments": ["index.html","script","static"],
+    "modules": ["lib"],
+    "load": "lib/app",
+    "handlebars": {
+        "all_partials": false,
+        "templates": "templates"
+    },
     "dependencies": {
-        "attachments": null
+        "attachments": null,
+        "modules": null,
+        "properties": null,
+        "handlebars": null
     }
 }

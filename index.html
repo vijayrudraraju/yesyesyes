@@ -46,23 +46,27 @@
     <script src="/_utils/script/jquery.couch.js"></script>
     <script src="script/jquery.form.js"></script>
     <script>
+        var dbName = 'yesyesyes';
+
         var articlesDoc = {};
         var authorsDoc = {};
         var bannersDoc = {};
 
         function loadBanner(image) {
-            $('#bannerImage').css('background','url(/yesyesyes/banners/'+image+')');
+            $('#bannerImage').css('background','url(/'+dbName+'/banners/'+image+')');
         }
         function updateGrid(articlesDoc) {
             for (var i=articlesDoc.data.length-1;i>=0;i--) {
                 var logoName = "";
+                var docId = "";
                 for (var j=0;j<authorsDoc.data.length;j++) {
                     if (articlesDoc.data[i].author === authorsDoc.data[j].name) {
                         logoName = authorsDoc.data[j].logo;
                         break;
                     }
                 }
-                $('#article-grid').append('<li><a href="#"><img class="thumbnail" src="/yesyesyes/authors/'+logoName+'" alt=""/></a></li>');
+                docId = articlesDoc.data[i].docid;
+                $('#article-grid').append('<li><a href="_show/article/'+docId+'"><img class="thumbnail" src="/'+dbName+'/authors/'+logoName+'" alt=""/></a></li>');
             }
         }
         function clearGrid() {
@@ -70,7 +74,13 @@
         }
 
         $(function(){
-            $.couch.db('yesyesyes').openDoc('banners', {
+            $('#article-grid').on('mouseover','li',function() {
+                if ($('a p',this).length === 0) {
+                    $('a',this).prepend('<p>yes</p>');
+                }
+            });
+
+            $.couch.db(dbName).openDoc('banners', {
                 success: function(data) {
                     console.log(data);
                     bannersDoc = data;
@@ -83,7 +93,7 @@
                     console.log(data);
                 }
             });
-            $.couch.db('yesyesyes').openDoc('authors', {
+            $.couch.db(dbName).openDoc('authors', {
                 success: function(data) {
                     console.log(data);
                     authorsDoc = data;
@@ -92,7 +102,7 @@
                     console.log(data);
                 }
             });
-            $.couch.db('yesyesyes').openDoc('articles', {
+            $.couch.db(dbName).openDoc('articles', {
                 success: function(data) {
                     console.log(data);
                     articlesDoc = data;
@@ -129,4 +139,3 @@
         </div> <!-- /container -->
     </body>
 </html>
-
