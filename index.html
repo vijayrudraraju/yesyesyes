@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=960"/>
+
         <meta charset="utf-8">
-        <title>yesyesyes</title>
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <title>YESYESYES</title>
+        <meta name="description" content="san francisco arts and culture">
+        <meta name="author" content="yesyesyes">
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
         <!--[if lt IE 9]>
@@ -12,17 +15,52 @@
         <![endif]-->
 
         <!-- Le styles -->
-        <link href="static/css/bootstrap.css" rel="stylesheet">
+        <!--<link href="static/css/bootstrap.css" rel="stylesheet">-->
         <style type="text/css">
+            html {
+                height: 100%;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            body {
+                position: relative;
+                min-height: 100%;
+                top: 0px;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            .container {
+                position: relative;
+                width: 100%;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            .page-header {
+                width: 960px;
+                margin-top: 5px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            h1 {
+                text-align: center;
+                font-size: 140px;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+
             .container > footer p {
-            text-align: center; /* center align it with the container */
+                text-align: center; /* center align it with the container */
             }
 
             .topbar .btn {
                 border: 0;
             }
 
-            #bannerImage {
+            #banner-image {
                 width: 940px;
                 height: 100px;
                 margin: 0px auto; padding:0;
@@ -33,12 +71,6 @@
                 height: 90px;
             }
         </style>
-
-        <!-- Le fav and touch icons -->
-        <link rel="shortcut icon" href="images/favicon.ico">
-        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
     </head>
 
     <script src="/_utils/script/json2.js"></script>
@@ -46,95 +78,135 @@
     <script src="/_utils/script/jquery.couch.js"></script>
     <script src="script/jquery.form.js"></script>
     <script>
-        var dbName = 'yesyesyes';
+        var dbName = 'yyy';
+        var articlesDocName = 'articles';
+        var authorsDocName = 'authors';
+        var bannersDocName = 'banners';
 
         var articlesDoc = {};
         var authorsDoc = {};
         var bannersDoc = {};
 
-        function loadBanner(image) {
-            $('#bannerImage').css('background','url(/'+dbName+'/banners/'+image+')');
-        }
-        function updateGrid(articlesDoc) {
-            for (var i=articlesDoc.data.length-1;i>=0;i--) {
-                var logoName = "";
-                var docId = "";
-                for (var j=0;j<authorsDoc.data.length;j++) {
-                    if (articlesDoc.data[i].author === authorsDoc.data[j].name) {
-                        logoName = authorsDoc.data[j].logo;
-                        break;
-                    }
-                }
-                docId = articlesDoc.data[i].docid;
-                $('#article-grid').append('<li><a href="_show/article/'+docId+'"><img class="thumbnail" src="/'+dbName+'/authors/'+logoName+'" alt=""/></a></li>');
-            }
-        }
-        function clearGrid() {
-            $('#banners-grid').html('');
-        }
+        var authorDocs = [];
 
-        $(function(){
-            $('#article-grid').on('mouseover','li',function() {
-                if ($('a p',this).length === 0) {
-                    $('a',this).prepend('<p>yes</p>');
-                }
-            });
-
-            $.couch.db(dbName).openDoc('banners', {
+        function loadBanner() {
+            $.couch.db(dbName).openDoc(bannersDocName, {
                 success: function(data) {
                     console.log(data);
                     bannersDoc = data;
                     if (bannersDoc.data.length !== 0) {
-                        console.log('load banner');
-                        loadBanner(bannersDoc.data[bannersDoc.data.length-1].name);
+                        for (var i=0;i<bannersDoc.data.length;i++) {
+                            if (bannersDoc.data[i].active) {
+                                console.log('load banner');
+                                $.couch.db(dbName).openDoc(bannersDoc.data[i].docid, {
+                                    success: function(data) {
+                                        console.log(data);
+                                        $('#banner-image').css('background','url(/'+dbName+'/'+data._id+'/'+data.logo+')');
+                                    },
+                                    error: function(data) {
+                                        console.log(data);
+                                    }
+                                });
+                            }
+                        }
                     }
                 },
                 error: function(data) {
                     console.log(data);
                 }
             });
-            $.couch.db(dbName).openDoc('authors', {
+        }
+
+        function loadAuthors() {
+            for (var i=0;i<authorsDoc.data.length;i++) {
+                $.couch.db(dbName).openDoc(authorsDoc.data[i].docid, {
+                    success: function(data) {
+                        console.log(data);
+                        authorDocs.push(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+
+            $.couch.db(dbName).openDoc('articles', {
                 success: function(data) {
+                    console.log('articles doc opened');
                     console.log(data);
-                    authorsDoc = data;
+                    console.log(authorsDoc);
+                    articlesDoc = data;
+                    updateGrid();
                 },
                 error: function(data) {
                     console.log(data);
                 }
             });
-            $.couch.db(dbName).openDoc('articles', {
-                success: function(data) {
-                    console.log(data);
-                    articlesDoc = data;
-                    updateGrid(articlesDoc);
-                },
-                error: function(data) {
-                    console.log(data);
+        }
+        function clearAuthors() {
+            authorDocs = [];
+        }
+
+        function updateGrid() {
+            for (var i=articlesDoc.data.length-1;i>=0;i--) {
+                console.log('updateGrid');
+                $.couch.db(dbName).openDoc(articlesDoc.data[i].docid, {
+                    success: function(data) {
+                        console.log('article doc loaded');
+                        console.log(data.author);
+                        console.log(authorDocs);
+                        for (var j=0;j<authorDocs.length;j++) {
+                            if (data.author === authorDocs[j].author) {
+                                $('#articles-grid').append('<li><a href="_show/article/'+data._id+'"><img class="thumbnail" src="/'+dbName+'/'+authorDocs[j]._id+'/'+authorDocs[j].logo+'" alt=""></a></li>');
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+        }
+        function clearGrid() {
+            $('#articles-grid').html('');
+        }
+
+
+        $(function(){
+            $('#articles-grid').on('mouseover','li',function() {
+                if ($('a p',this).length === 0) {
+                    $('a',this).prepend('<p>yesyesyes</p>');
                 }
             });
 
+            loadBanner();
+
+            $.couch.db(dbName).openDoc('authors', {
+                success: function(data) {
+                    console.log('authors doc opened');
+                    console.log(data);
+                    authorsDoc = data;
+                    clearAuthors();
+                    loadAuthors();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
 
         });
     </script>
     <body>
         <div class="container">
-            <div class="content">
-                <div class="page-header">
-                    <ul id="bannerImage">
-                    </ul>
-                </div>
+            <div class="page-header">
+                <h1>YESYESYES</h1>
             </div>
             <div class="row">
                 <div class="span12">
-                    <ul id="article-grid" class="media-grid">
+                    <ul id="articles-grid" class="media-grid">
                     </ul>
                 </div>
             </div>
-
-            <footer>
-            <p>&copy; YesYesYes 2012</p>
-            <p>web stuff by vijay rudraraju</p>
-            </footer>
 
         </div> <!-- /container -->
     </body>
