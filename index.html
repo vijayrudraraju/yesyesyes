@@ -43,38 +43,80 @@
                 margin-left: auto;
                 margin-right: auto;
             }
+            .page-body {
+                width: 776px;
+                margin-top: 5px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .grid {
+                width: 736px;
+                padding: 0px;
+                margin: 0px;
+                list-style-type: none;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .cell {
+                float: left;
+                width: 140;
+                height: 140px;
+                padding: 0px;
+                margin: 20px;
+                border: 2px solid black;
+            }
 
+            a {
+                text-decoration: none;
+            }
+            a:link {
+                color: #000000;
+            }
+            a:visited {
+                color: #000000;
+            }
+            a:hover {
+                color: #000000;
+            }
+            a:active {
+                color: #000000;
+            }
             h1 {
                 text-align: center;
-                font-size: 140px;
+                font-size: 120px;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            h2 {
+                text-align: center;
+                font-size: 30px;
                 margin: 0px;
                 padding: 0px;
                 border: 0px;
             }
 
-            .container > footer p {
-                text-align: center; /* center align it with the container */
+            .link {
             }
-
-            .topbar .btn {
-                border: 0;
-            }
-
-            #banner-image {
-                width: 940px;
-                height: 100px;
-                margin: 0px auto; padding:0;
-            }
-
             .thumbnail {
-                width: 90px;
-                height: 90px;
+                position: relative;
+                width: 140px;
+                height: 140px;
+                padding: 0px;
+                margin: 0px;
+            }
+            .label {
+                position:relative;
+                width: 140px;
+                height: 140px;
+                top: -162px;
             }
         </style>
     </head>
 
     <script src="/_utils/script/json2.js"></script>
-    <script src="script/jquery.js"></script>
+    <!--<script src="script/jquery.js"></script>-->
+    <script src="/_utils/script/jquery.js"></script>
     <script src="/_utils/script/jquery.couch.js"></script>
     <script src="script/jquery.form.js"></script>
     <script>
@@ -89,6 +131,7 @@
 
         var authorDocs = [];
 
+        /*
         function loadBanner() {
             $.couch.db(dbName).openDoc(bannersDocName, {
                 success: function(data) {
@@ -116,6 +159,7 @@
                 }
             });
         }
+        */
 
         function loadAuthors() {
             for (var i=0;i<authorsDoc.data.length;i++) {
@@ -157,7 +201,9 @@
                         console.log(authorDocs);
                         for (var j=0;j<authorDocs.length;j++) {
                             if (data.author === authorDocs[j].author) {
-                                $('#articles-grid').append('<li><a href="_show/article/'+data._id+'"><img class="thumbnail" src="/'+dbName+'/'+authorDocs[j]._id+'/'+authorDocs[j].logo+'" alt=""></a></li>');
+                                //$('#articles-grid').append('<li><a class=" href="_show/article/'+data._id+'"><img class="thumbnail" src="/'+dbName+'/'+authorDocs[j]._id+'/'+authorDocs[j].logo+'" alt=""></a></li>');
+                                //$('.grid').append();
+                                $('.grid').append('<li class="cell"><img src="/'+dbName+'/'+authorDocs[j]._id+'/'+authorDocs[j].logo+'" class="thumbnail"></img><a class="link" href="_show/article/'+data._id+'"><div class="label"><h3>'+data.title+'</h3><h3>'+data.author+'<h3></div></a></li>').find('.label').toggle(false);
                             }
                         }
                     },
@@ -166,20 +212,32 @@
                     }
                 });
             }
+            $('.cell').each(function() {
+                $('.label',this).toggle(false);
+            });
         }
         function clearGrid() {
-            $('#articles-grid').html('');
+            $('.grid').html('');
         }
 
 
         $(function(){
-            $('#articles-grid').on('mouseover','li',function() {
-                if ($('a p',this).length === 0) {
-                    $('a',this).prepend('<p>yesyesyes</p>');
-                }
+            clearGrid();
+            //$('.grid').on('mouseover','li',function() {
+            $('li').live('mouseover',function() {
+                $('.cell').each(function() {
+                    $('.label',this).toggle(false);
+                });
+                $('.label',this).toggle(true);
+            });
+            //$('.grid').on('mouseout','li',function() {
+            $('li').live('mouseout',function() {
+                $('.cell').each(function() {
+                    $('.label',this).toggle(false);
+                });
             });
 
-            loadBanner();
+            //loadBanner();
 
             $.couch.db(dbName).openDoc('authors', {
                 success: function(data) {
@@ -200,12 +258,51 @@
         <div class="container">
             <div class="page-header">
                 <h1>YESYESYES</h1>
+                <h2>San Francisco Arts and Culture</h2>
             </div>
-            <div class="row">
-                <div class="span12">
+            <div class="page-body">
+                <ul class="grid">
+                <!--<table class="grid">
+                    <tr>-->
+                        <li class="cell"><img src="images/butterfly.jpg" class="thumbnail"></img></a><a class="link" href="_show/article"><div class="label"><h3>Mirage</h3><h3>Katie Miller</h3></div></a></li>
+                        <li class="cell"><a class="link" href="_show/article"><img src="images/clef.jpg" class="thumbnail"></img></a><div class="label"><h3>Happy Trees</h3><h3>Bob Connors</h3></div></li>
+                        <li class="cell"><a class="link" href="_show/article"><img src="images/wheel.jpg" class="thumbnail"></img></a><div class="label"><h3>Sampson</h3><h3>Pete Winters</h3></div></li>
+                        <li class="cell"><a class="link" href="_show/article"><img src="images/butterfly.jpg" class="thumbnail"></img></a><div class="label"><h3>Mirage</h3><h3>Katie Miller</h3></div></li>
+                        <li class="cell"><a class="link" href="_show/article"><img src="images/clef.jpg" class="thumbnail"></img></a><div class="label"><h3>Happy Trees</h3><h3>Bob Connors</h3></div></li>
+                        <li class="cell"><a class="link" href="_show/article"><img src="images/wheel.jpg" class="thumbnail"></img></a><div class="label"><h3>Sampson</h3><h3>Pete Winters</h3></div></li>
+                    </ul>
+                        <!--
+                    </tr>
+                    <tr>
+                        <td>First</td>
+                        <td>Row</td>
+                        <td>Second</td>
+                        <td>Third</td>
+                    </tr>
+                    <tr>
+                        <td>First</td>
+                        <td>Row</td>
+                        <td>Second</td>
+                        <td>Third</td>
+                    </tr>
+                    <tr>
+                        <td>First</td>
+                        <td>Row</td>
+                        <td>Second</td>
+                        <td>Third</td>
+                    </tr>
+                    <tr>
+                        <td>First</td>
+                        <td>Row</td>
+                        <td>Second</td>
+                        <td>Third</td>
+                    </tr>
+                </table>
+                -->
+                <!--<div class="span12">
                     <ul id="articles-grid" class="media-grid">
                     </ul>
-                </div>
+                </div>-->
             </div>
 
         </div> <!-- /container -->
