@@ -2,17 +2,17 @@
     "name": "one",
     "version": "0.0.1",
     "description": "website for yesyesyes magazine",
-    "attachments": ["index.html","script","static","images"],
+    "attachments": ["index.html","script","style"],
+    "duality": { "base_template": "base.html" },
+    "dust": { "templates": "templates" },
     "modules": ["lib"],
     "load": "lib/app",
-    "handlebars": {
-        "all_partials": false,
-        "templates": "templates"
-    },
     "dependencies": {
         "attachments": null,
         "modules": null,
         "properties": null,
-        "handlebars": null
+        "dust": null,
+        "duality": null,
+        "duality-dust": null
     }
 }

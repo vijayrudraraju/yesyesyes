@@ -1,310 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="viewport" content="width=960"/>
-
         <meta charset="utf-8">
         <title>YESYESYES</title>
         <meta name="description" content="san francisco arts and culture">
         <meta name="author" content="yesyesyes">
 
-        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-        <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 
-        <!-- Le styles -->
-        <!--<link href="static/css/bootstrap.css" rel="stylesheet">-->
-        <style type="text/css">
-            html {
-                height: 100%;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            body {
-                position: relative;
-                min-height: 100%;
-                top: 0px;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            .container {
-                position: relative;
-                width: 100%;
-                margin-top: 0px;
-                margin-bottom: 0px;
-            }
-            .page-header {
-                width: 960px;
-                margin-top: 5px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .page-body {
-                width: 776px;
-                margin-top: 5px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .grid {
-                width: 736px;
-                padding: 0px;
-                margin: 0px;
-                list-style-type: none;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .cell {
-                float: left;
-                width: 140;
-                height: 140px;
-                padding: 0px;
-                margin: 20px;
-                border: 2px solid black;
-            }
+        <link href='http://fonts.googleapis.com/css?family=Cantata+One|Graduate|Cousine:400,700|Ovo|Sarina|Shadows+Into+Light|Rosarivo|Nosifer|EB+Garamond|Fredoka+One|Josefin+Sans:400,700|Ubuntu+Condensed|PT+Mono|Press+Start+2P|Bree+Serif|Diplomata+SC|Mrs+Sheppards|Abril+Fatface|Cutive|Kaushan+Script|Sancreek|Pontano+Sans|Varela|Didact+Gothic|Macondo|Boogaloo|Fondamento|Rock+Salt|Ewert|Alegreya+SC|Allan:700|Creepster|Carter+One|Bangers|Prata' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Karla:400,700|Telex' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" type="text/css" href="style/yyy-page.css"/>
 
-            a {
-                text-decoration: none;
-            }
-            a:link {
-                color: #000000;
-            }
-            a:visited {
-                color: #000000;
-            }
-            a:hover {
-                color: #000000;
-            }
-            a:active {
-                color: #000000;
-            }
-            h1 {
-                text-align: center;
-                font-size: 120px;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            h2 {
-                text-align: center;
-                font-size: 30px;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
+        <script type="text/javascript" src="/_utils/script/json2.js"></script>
+        <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+        <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+        <script type="text/javascript" src="script/underscore.js"></script>
+        <script type="text/javascript" src="script/backbone.js"></script>
+        <script type="text/javascript" src="script/backbone-couchdb.js"></script>
 
-            .link {
-            }
-            .thumbnail {
-                position: relative;
-                width: 140px;
-                height: 140px;
-                padding: 0px;
-                margin: 0px;
-            }
-            .label {
-                position:relative;
-                width: 140px;
-                height: 140px;
-                top: -162px;
-            }
-        </style>
+        <script src="script/yyy.js"></script>
+
     </head>
-
-    <script src="/_utils/script/json2.js"></script>
-    <!--<script src="script/jquery.js"></script>-->
-    <script src="/_utils/script/jquery.js"></script>
-    <script src="/_utils/script/jquery.couch.js"></script>
-    <script src="script/jquery.form.js"></script>
-    <script>
-        var dbName = 'yyy';
-        var articlesDocName = 'articles';
-        var authorsDocName = 'authors';
-        var bannersDocName = 'banners';
-
-        var articlesDoc = {};
-        var authorsDoc = {};
-        var bannersDoc = {};
-
-        var authorDocs = [];
-
-        /*
-        function loadBanner() {
-            $.couch.db(dbName).openDoc(bannersDocName, {
-                success: function(data) {
-                    console.log(data);
-                    bannersDoc = data;
-                    if (bannersDoc.data.length !== 0) {
-                        for (var i=0;i<bannersDoc.data.length;i++) {
-                            if (bannersDoc.data[i].active) {
-                                console.log('load banner');
-                                $.couch.db(dbName).openDoc(bannersDoc.data[i].docid, {
-                                    success: function(data) {
-                                        console.log(data);
-                                        $('#banner-image').css('background','url(/'+dbName+'/'+data._id+'/'+data.logo+')');
-                                    },
-                                    error: function(data) {
-                                        console.log(data);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-        */
-
-        function loadAuthors() {
-            for (var i=0;i<authorsDoc.data.length;i++) {
-                $.couch.db(dbName).openDoc(authorsDoc.data[i].docid, {
-                    success: function(data) {
-                        console.log(data);
-                        authorDocs.push(data);
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-            }
-
-            $.couch.db(dbName).openDoc('articles', {
-                success: function(data) {
-                    console.log('articles doc opened');
-                    console.log(data);
-                    console.log(authorsDoc);
-                    articlesDoc = data;
-                    updateGrid();
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-        function clearAuthors() {
-            authorDocs = [];
-        }
-
-        function updateGrid() {
-            for (var i=articlesDoc.data.length-1;i>=0;i--) {
-                console.log('updateGrid');
-                $.couch.db(dbName).openDoc(articlesDoc.data[i].docid, {
-                    success: function(data) {
-                        console.log('article doc loaded');
-                        console.log(data.author);
-                        console.log(authorDocs);
-                        for (var j=0;j<authorDocs.length;j++) {
-                            if (data.author === authorDocs[j].author) {
-                                //$('#articles-grid').append('<li><a class=" href="_show/article/'+data._id+'"><img class="thumbnail" src="/'+dbName+'/'+authorDocs[j]._id+'/'+authorDocs[j].logo+'" alt=""></a></li>');
-                                //$('.grid').append();
-                                $('.grid').append('<li class="cell"><img src="/'+dbName+'/'+authorDocs[j]._id+'/'+authorDocs[j].logo+'" class="thumbnail"></img><a class="link" href="_show/article/'+data._id+'"><div class="label"><h3>'+data.title+'</h3><h3>'+data.author+'<h3></div></a></li>').find('.label').toggle(false);
-                            }
-                        }
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-            }
-            $('.cell').each(function() {
-                $('.label',this).toggle(false);
-            });
-        }
-        function clearGrid() {
-            $('.grid').html('');
-        }
-
-
-        $(function(){
-            clearGrid();
-            //$('.grid').on('mouseover','li',function() {
-            $('li').live('mouseover',function() {
-                $('.cell').each(function() {
-                    $('.label',this).toggle(false);
-                });
-                $('.label',this).toggle(true);
-            });
-            //$('.grid').on('mouseout','li',function() {
-            $('li').live('mouseout',function() {
-                $('.cell').each(function() {
-                    $('.label',this).toggle(false);
-                });
-            });
-
-            //loadBanner();
-
-            $.couch.db(dbName).openDoc('authors', {
-                success: function(data) {
-                    console.log('authors doc opened');
-                    console.log(data);
-                    authorsDoc = data;
-                    clearAuthors();
-                    loadAuthors();
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            });
-
-        });
-    </script>
     <body>
+
         <div class="container">
-            <div class="page-header">
-                <h1>YESYESYES</h1>
-                <h2>San Francisco Arts and Culture</h2>
-            </div>
-            <div class="page-body">
-                <ul class="grid">
-                <!--<table class="grid">
-                    <tr>-->
-                        <li class="cell"><img src="images/butterfly.jpg" class="thumbnail"></img></a><a class="link" href="_show/article"><div class="label"><h3>Mirage</h3><h3>Katie Miller</h3></div></a></li>
-                        <li class="cell"><a class="link" href="_show/article"><img src="images/clef.jpg" class="thumbnail"></img></a><div class="label"><h3>Happy Trees</h3><h3>Bob Connors</h3></div></li>
-                        <li class="cell"><a class="link" href="_show/article"><img src="images/wheel.jpg" class="thumbnail"></img></a><div class="label"><h3>Sampson</h3><h3>Pete Winters</h3></div></li>
-                        <li class="cell"><a class="link" href="_show/article"><img src="images/butterfly.jpg" class="thumbnail"></img></a><div class="label"><h3>Mirage</h3><h3>Katie Miller</h3></div></li>
-                        <li class="cell"><a class="link" href="_show/article"><img src="images/clef.jpg" class="thumbnail"></img></a><div class="label"><h3>Happy Trees</h3><h3>Bob Connors</h3></div></li>
-                        <li class="cell"><a class="link" href="_show/article"><img src="images/wheel.jpg" class="thumbnail"></img></a><div class="label"><h3>Sampson</h3><h3>Pete Winters</h3></div></li>
+
+            <div class="content">
+
+                <div class="page-header">
+                    <h1>YESYESYES</h1>
+                    <h2>San Francisco Arts and Culture</h2>
+                </div>
+
+                <div class="homepage-section">
+                    <ul class="grid">
                     </ul>
-                        <!--
-                    </tr>
-                    <tr>
-                        <td>First</td>
-                        <td>Row</td>
-                        <td>Second</td>
-                        <td>Third</td>
-                    </tr>
-                    <tr>
-                        <td>First</td>
-                        <td>Row</td>
-                        <td>Second</td>
-                        <td>Third</td>
-                    </tr>
-                    <tr>
-                        <td>First</td>
-                        <td>Row</td>
-                        <td>Second</td>
-                        <td>Third</td>
-                    </tr>
-                    <tr>
-                        <td>First</td>
-                        <td>Row</td>
-                        <td>Second</td>
-                        <td>Third</td>
-                    </tr>
-                </table>
-                -->
-                <!--<div class="span12">
-                    <ul id="articles-grid" class="media-grid">
-                    </ul>
-                </div>-->
-            </div>
+                </div>
+
+                <div class="page-footer">
+                    <h2><a href="">home</a>&#149buy our print mag&#149<a href="mailto:yesyesyesmag@gmail.com" target="_blank">send us work</a>&#149<a href="http://www.facebook.com/yesyesyes.mag" target="_blank">be our friend</a></h2> 
+                </div>
+
+            </div> <!-- /content -->
 
         </div> <!-- /container -->
+
     </body>
 </html>
