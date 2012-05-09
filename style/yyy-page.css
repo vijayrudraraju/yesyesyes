@@ -249,6 +249,7 @@ fieldset div {
     opacity: 0.8;
 }
 .label h3 {
+    font-family: 'Karla', sans-serif;
     color: black;
     padding: 1px;
     text-decoration: none;
