@@ -1,59 +1,8 @@
 $(function() {
     var _DBNAME = 'yyy';
-    var _FONTS = [
-    '"Cantata One", serif', 
-    '"Graduate", cursive', 
-    '"Cousine", sans-serif',
-    '"Ovo", serif',
-    '"Sarina", cursive',
-    '"Shadows Into Light", cursive',
-    '"Rosarivo", serif',
-    '"Nosifer", cursive',
-    '"EB Garamond", serif',
-    '"Fredoka One", cursive',
-    '"Josefin Sans", sans-serif',
-    '"Ubuntu Condensed", sans-serif',
-    '"PT Mono", sans-serif',
-    '"Press Start 2P", cursive',
-    '"Oxygen", sans-serif',
-    '"Bree Serif", serif',
-    '"Diplomata SC", cursive',
-    '"Mrs Sheppards", cursive',
-    '"Abril Fatface", cursive',
-    '"Cutive", serif',
-    '"Kaushan Script", cursive',
-    '"Sancreek", cursive',
-    '"Pontano Sans", sans-serif',
-    '"Varela", sans-serif',
-    '"Didact Gothic", sans-serif',
-    '"Macondo", cursive',
-    '"Boogaloo", cursive',
-    '"Fondamento", cursive',
-    '"Rock Salt", cursive',
-    '"Ewert", cursive',
-    '"Alegreya SC", serif',
-    '"Allan", cursive',
-    '"Creepster", cursive',
-    '"Carter One", cursive',
-    '"Bangers", cursive',
-    '"Prata", serif',
-    ];
-    var _COLORS = [
-    'Lavender',
-    'LavenderBlush',
-    'LemonChiffon',
-    'LightCyan',
-    'MediumAquaMarine',
-    'Orchid',
-    'PaleGreen',
-    'Azure',
-    'DarkCyan',
-    'Gold'
-    ]
-
 
     Backbone.couch_connector.config.db_name = _DBNAME;
-    Backbone.couch_connector.config.ddoc_name = "edit";
+    Backbone.couch_connector.config.ddoc_name = "one";
 
     window.PageModel= Backbone.Model.extend({
         url: '/pages'
@@ -83,9 +32,6 @@ $(function() {
                     $('.label',this).toggle(false);
                 });
             });
-
-            $('.page-header h1').css('font-family',_FONTS[Math.floor(Math.random()*_FONTS.length)]);
-            $('html').css('background-color',_COLORS[Math.floor(Math.random()*_COLORS.length)]);
         },
         onReset: function(coll,resp) {
             console.log('onReset all');
@@ -113,7 +59,7 @@ $(function() {
             else if (model.get('tracks'))
                 linkText = '_show/musicArticle/'+model.id;
 
-            $('.grid').append('<li class="cell"><img src="/'+_DBNAME+'/'+model.id+'/'+model.get('covername')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('title')+'</h3><h3>'+model.get('author')+'</h3></div></a></li>').find('.label').toggle(false);
+            $('.grid').append('<li class="cell"><img src="/yyy/_design/one/_rewrite/'+_DBNAME+'/'+model.id+'/'+model.get('covername')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
         }
     });
     window.All = new AllView({ el: $('#all-section')  });

@@ -11,19 +11,27 @@ body {
     border: 0px;
 }
 h1 {
+    font-family: 'Karla', sans-serif;
     text-align: center;
     font-size: 140px;
+    font-weight: normal;
     height: 132px;
     margin: 0px;
     padding: 0px;
     border: 0px;
 }
 h2 {
+    font-family: 'Goudy Bookletter 1911', serif;
     text-align: center;
-    font-size: 40px;
     margin: 0px;
     padding: 0px;
     border: 0px;
+}
+.title {
+    font-size: 40px;
+}
+.author {
+    font-size: 35px;
 }
 
 button, input.submit, input.button {
@@ -77,24 +85,21 @@ fieldset div {
     margin-left: 40px;
     margin-right: 40px;
 }
-.page-header h2 {
-    font-family: 'Karla', sans-serif;
+.page-header a {
+    text-decoration: none;
+    color: black;
 }
 .page-subheader {
     width: 880px;
-    margin-top: 30px;
+    margin-top: 100px;
     margin-bottom: 10px;
     margin-left: 40px;
     margin-right: 40px;
 }
-.page-subheader h2 {
-    font-size: 60px;
-    text-align: left;
-    font-family: 'Karla', sans-serif;
-}
+
 .homepage-section {
     width: 880px;
-    margin-top: 30px;
+    margin-top: 100px;
     margin-bottom: 30px;
     margin-left: 40px;
     margin-right: 40px;
@@ -107,7 +112,8 @@ fieldset div {
     margin-right: 40px;
 }
 .page-section p {
-    font-size: 30px;
+    font-family: 'Goudy Bookletter 1911', serif;
+    font-size: 22px;
 }
 .page-section iframe {
     width: 880px;
@@ -131,8 +137,8 @@ fieldset div {
     margin-right: 0px;
 }
 .page-footer h2, .page-footer a {
-    font-family: 'Karla', sans-serif;
-    font-size: 37px;
+    font-family: 'Pontano Sans', sans-serif;
+    font-size: 25px;
     text-decoration: none;
     color: black;
 }
@@ -243,13 +249,13 @@ fieldset div {
     position: relative;
     width: 140px;
     height: 140px;
-    top: -162px;
+    top: -163px;
     background: white;
     font-color: black;
     opacity: 0.8;
 }
 .label h3 {
-    font-family: 'Karla', sans-serif;
+    font-family: 'Pontano Sans', sans-serif;
     color: black;
     padding: 1px;
     text-decoration: none;
