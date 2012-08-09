@@ -59,7 +59,7 @@ $(function() {
             else if (model.get('tracks'))
                 linkText = '_show/musicArticle/'+model.id;
 
-            $('.grid').append('<li class="cell"><img src="/yyy/_design/one/_rewrite/'+_DBNAME+'/'+model.id+'/'+model.get('covername')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
+            $('.grid').append('<li class="cell"><img src="/'+_DBNAME+'/'+model.id+'/'+model.get('covername')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
         }
     });
     window.All = new AllView({ el: $('#all-section')  });
