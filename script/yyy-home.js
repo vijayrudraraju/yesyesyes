@@ -15,6 +15,9 @@ $(function() {
     });
 
     window.Pages = new PageCollection;
+    window.Pages.comparator = function(a,b) {
+        return b.get('unix_creation_time') - a.get('unix_creation_time');
+    };
 
     window.AllView = Backbone.View.extend({
         initialize: function() {
@@ -38,9 +41,7 @@ $(function() {
 
             $('.grid').html('');
 
-            for (var i=Pages.length-1;i>=0;i--) {
-                this.addOne(Pages.at(i));
-            }
+            window.Pages.each(this.addOne, this);
 
             $('.cell').each(function() {
                 $('.label',this).toggle(false);
@@ -51,6 +52,7 @@ $(function() {
         addOne: function(model) {
             var linkText = '';
             console.log('addOne',model);
+            /*
             if (model.get('text'))
                 linkText = '_show/textArticle/'+model.id;
             else if (model.get('filenames'))
@@ -59,8 +61,21 @@ $(function() {
                 linkText = '_show/videosArticle/'+model.id;
             else if (model.get('tracks'))
                 linkText = '_show/musicArticle/'+model.id;
+                */
+            var linkText = '_show/article/'+model.id;
 
-            $('.grid').append('<li class="cell"><img src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
+
+            //$('.grid').append('<li class="cell"><img src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
+            var str = 
+                '<li class="cell">' +
+                '<a class="link" href="'+linkText+'">' + 
+                '<img class="thumbnail" src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')+'"/>' +
+                '<div class="label">' +
+                '<h3>'+model.get('author')+'</h3>' +
+                '<h3>'+model.get('title')+'</h3>' +
+                '</div></a>' + 
+                '</li>';
+            $('.grid').append(str);
         }
     });
     window.All = new AllView({ el: $('#all-section')  });

@@ -1,0 +1,25 @@
+<!-- in /templates/base.html -->
+{#sections}
+    {#normText}
+<div class="page-section page-section-{id}">
+    <p>{.|s}</p>
+    {/normText}
+    {#text}
+</div>
+    {/text}
+    {#image}
+<div class="page-section page-section-{id}">
+    <img class="fullscreen" src="/yyy/{page_id}/{.}"/>
+</div>
+    {/image}
+    {#empty}
+<div class="page-section page-section-{id}">
+    <img class="small" src="/yyy/{page_id}/((empty))"/>
+</div>
+    {/empty}
+    {#link}
+<div class="page-section page-section-{id}">
+        <a href="{link}" target="_blank"><h2 class="url">{display}</h2></a>
+</div>
+    {/link}
+{/sections}

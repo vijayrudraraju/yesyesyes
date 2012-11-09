@@ -36,6 +36,9 @@ h2 {
 .author {
     font-size: 35px;
 }
+.url {
+    font-size: 35px;
+}
 
 /* top-level structure */
 .container {
