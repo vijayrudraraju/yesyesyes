@@ -68,7 +68,7 @@ $(function() {
             //$('.grid').append('<li class="cell"><img src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
             var str = 
                 '<li class="cell">' +
-                '<a class="link" href="'+linkText+'">' + 
+                '<a class="link" href="'+linkText+'" target="_blank">' + 
                 '<img class="thumbnail" src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')+'"/>' +
                 '<div class="label">' +
                 '<h3>'+model.get('author')+'</h3>' +
