@@ -94,7 +94,15 @@ h2 {
     font-family: 'Goudy Bookletter 1911', serif;
     font-size: 22px;
 }
-.page-section iframe {
+.video-section iframe {
+    height: 700px;
+    width: 880px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.sound-section iframe {
     width: 880px;
     margin-top: 30px;
     margin-bottom: 30px;
