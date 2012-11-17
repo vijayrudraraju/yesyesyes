@@ -52,21 +52,15 @@ $(function() {
         addOne: function(model) {
             var linkText = '';
             console.log('addOne',model);
-            /*
-            if (model.get('text'))
-                linkText = '_show/textArticle/'+model.id;
-            else if (model.get('filenames'))
-                linkText = '_show/imagesArticle/'+model.id;
-            else if (model.get('videos'))
-                linkText = '_show/videosArticle/'+model.id;
-            else if (model.get('tracks'))
-                linkText = '_show/musicArticle/'+model.id;
-                */
             var linkText = '_show/article/'+model.id;
 
-
-            //$('.grid').append('<li class="cell"><img src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')[0]+'" class="thumbnail"></img><a class="link" href="'+linkText+'"><div class="label"><h3>'+model.get('author')+'</h3><h3>'+model.get('title')+'</h3></div></a></li>').find('.label').toggle(false);
-            var str = 
+            var str = ''; 
+            if (model.get('is_new')) {
+                str +=
+                    '<div style="float:left;background:yellow;">' +
+                    '<p style="position:relative;top:0px;margin:0;height:0px;text-align:center;font-family:\'Pontano Sans\';">NEW!!!</p>';
+            }
+            str += 
                 '<li class="cell">' +
                 '<a class="link" href="'+linkText+'" target="_blank">' + 
                 '<img class="thumbnail" src="/'+_DBNAME+'/'+model.id+'/'+model.get('cover_name')+'"/>' +
@@ -75,6 +69,9 @@ $(function() {
                 '<h3>'+model.get('title')+'</h3>' +
                 '</div></a>' + 
                 '</li>';
+            if (model.get('is_new')) {
+                str += '</div>';
+            }
             $('.grid').append(str);
         }
     });

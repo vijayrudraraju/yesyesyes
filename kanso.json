@@ -2,7 +2,7 @@
     "name": "one",
     "version": "0.0.1",
     "description": "website for yesyesyes magazine",
-    "attachments": ["index.html","about.html","script","style"],
+    "attachments": ["index.html","about.html","print-mag.html","script","style"],
     "duality": { "base_template": "base.html" },
     "dust": { "templates": "templates" },
     "modules": ["lib"],
